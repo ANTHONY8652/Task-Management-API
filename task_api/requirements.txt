@@ -1,0 +1,54 @@
+BE Capstone Project: Task Management API
+Project Overview:
+As a backend developer, your goal is to design and implement a Task Management API using Django and Django REST Framework. The API will allow users to manage their tasks by creating, updating, deleting, and marking tasks as complete or incomplete. You will be responsible for building and deploying a fully functional API, simulating the work of a backend developer, including database management, user authentication, and API design.
+
+Functional Requirements:
+Task Management (CRUD):
+
+Implement the ability to Create, Read, Update, and Delete (CRUD) tasks.
+Each task should have the following attributes: Title, Description, Due Date, Priority Level (e.g., Low, Medium, High), and Status (e.g., Pending, Completed).
+Ensure validations such as a due date in the future, priority level restrictions, and proper status updates.
+Users Management (CRUD):
+
+Implement CRUD operations for users.
+A user should have a unique Username, Email, and Password.
+Ensure that each user can manage their own tasks and has no access to tasks of other users.
+Mark Tasks as Complete or Incomplete:
+
+Create an endpoint to allow users to mark tasks as complete or incomplete.
+Ensure that once a task is marked as complete, it cannot be edited unless reverted to incomplete.
+Add a timestamp for when a task is marked as complete.
+Task Filters and Sorting:
+
+Create an endpoint to list tasks with optional filters for Status (Pending or Completed), Priority, and Due Date.
+Allow tasks to be sorted by Due Date or Priority Level.
+Technical Requirements:
+Database:
+
+Use Django ORM to interact with the database.
+Define models for Tasks and Users.
+Design the relationship so that each user has access to their own tasks only.
+Authentication:
+
+Implement user authentication using Django’s built-in authentication system.
+Users should be required to log in before managing their tasks.
+Optionally, explore token-based authentication (JWT) to secure your API further.
+API Design:
+
+Use Django Rest Framework (DRF) to create and expose the necessary API endpoints.
+Ensure adherence to RESTful design principles by using appropriate HTTP methods (GET, POST, PUT, DELETE).
+Ensure proper error handling and return appropriate HTTP status codes for operations (e.g., 404 for not found, 400 for bad request).
+Deployment:
+
+Deploy your API on Heroku or PythonAnywhere.
+Ensure the API is accessible and functions as intended in the deployed environment.
+Task Ownership:
+
+Ensure that tasks are only accessible to the users who created them.
+Implement permission checks to prevent unauthorized access to other users’ tasks.
+Stretch Goals (Optional):
+Task Categories: Allow users to create categories for tasks (e.g., Work, Personal) and assign tasks to these categories.
+Recurring Tasks: Add the option to create recurring tasks (e.g., daily, weekly) that automatically regenerate after completion.
+Notifications: Implement email or in-app notifications to remind users about upcoming due dates or when a task is due soon.
+Task History: Store task history to allow users to track completed tasks over time and retrieve a list of completed tasks.
+Collaborative Tasks: Add functionality for users to collaborate on tasks by sharing specific tasks with other users, with shared users being able to view or edit the task.
