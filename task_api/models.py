@@ -1,10 +1,13 @@
 from django.db import models
+from users.models import User
 
 class Task(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
-    due_date = models.DateField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    due_date = models.DateField(null=True, blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    is_completed = models.BooleanField(default=False)
     
     LOW = 'Low'
     MEDIUM = 'Medium'
@@ -36,6 +39,6 @@ class Task(models.Model):
     )
 
     def __str__(self):
-        return self.title
+        return {self.title} - {self.owner}
 
 # Create your models here.
