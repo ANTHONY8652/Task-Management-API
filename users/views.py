@@ -1,10 +1,12 @@
-from django.shortcuts import render
-from .models import User
+from django.contrib.auth import get_user_model
 from .serializers import UserSerializer, UserLoginSerializer
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import make_password
+
+User = get_user_model()
 
 class UserListCreateView(generics.ListCreateAPIView):
     queryset = User.objects.all()
@@ -22,7 +24,7 @@ class UserListCreateView(generics.ListCreateAPIView):
         user = User(
             username = username,
             email = email,
-            password = User.objects.make_password(password)
+            password = make_password(password)
         )
 
         user.save()
@@ -30,8 +32,9 @@ class UserListCreateView(generics.ListCreateAPIView):
         token, _ = Token.objects.get_or_create(user=user)
         return Response({
             'user': UserSerializer(user).data,
+            'redirect_url': 'http://localhost:8000/api/login/',
             'token': token.key
-        }, status=status.HTTP_201_created)
+        }, status=status.HTTP_201_CREATED)
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
@@ -44,16 +47,19 @@ class UserLoginView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         email = request.data.get('email')
         password = request.data.get('password')
+        
         user = authenticate(email=email, password=password)
+
 
         if user is not None:
             token, _ = Token.objects.get_or_create(user=user)
             
             return Response({
                 'user': UserSerializer(user).data,
+                'redirect_url': 'http://localhost:8000/api/tasks/',
                 'token': token.key
             })
-        
+                
         return Response({'detail': 'Invalid email or password'}, status=status.HTTP_401_UNAUTHORIZED)
     
 class UserLogoutView(generics.GenericAPIView):

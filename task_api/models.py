@@ -39,6 +39,6 @@ class Task(models.Model):
     )
 
     def __str__(self):
-        return {self.title} - {self.owner}
+        return f'{self.owner} created {self.title} task on {self.created_at}'
 
 # Create your models here.

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -142,3 +143,32 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = 'users.User'
 
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file_debug': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'task_debug.log',
+        },
+        'file_warning': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': 'task_warning.log',
+        },
+        'file_error': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'filename': 'task_error.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file_debug', 'file_warning', 'file_error'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

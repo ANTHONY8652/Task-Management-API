@@ -25,13 +25,21 @@ class TaskRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
 
 class TaskToggleCompleteView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
-
+    serializer_class = TaskSerializer
+    """"
     def post(self, request, pk):
         task = Task.objects.get(pk=pk, owner=request.user)
         task.is_completed = not task.is_completed
         task.save()
         
         return Response({'status': 'task_completion_toggled'}, status=status.HTTP_200_OK)
+    """
+    def update(self, request, *args, **kwargs):
+        task = self.get_object()
+        task.is_completed = not task.is_completed
+        task.save()
+        return Response(TaskSerializer(task).data)
+    
 
 class UserTaskListView(generics.ListAPIView):
     serializer_class = TaskSerializer
