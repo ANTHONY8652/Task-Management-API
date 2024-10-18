@@ -3,9 +3,10 @@ from .models import Task
 from django.core.exceptions import ValidationError
 
 class TaskSerializer(serializers.ModelSerializer):
+    shared_with = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     class Meta:
         model = Task
-        fields = ['id', 'title', 'description', 'created_at', 'due_date', 'owner']
+        fields = ['id', 'title', 'description', 'created_at', 'due_date', 'owner', 'is_completed', 'completed_at', 'shared_with']
         read_only_fields = ['created_at', 'owner']
 
         def validate(self, data):

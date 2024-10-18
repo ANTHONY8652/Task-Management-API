@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from .serializers import UserSerializer, UserLoginSerializer
+from .serializers import UserSerializer, UserLoginSerializer, UserLogoutSerializer
 from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -64,16 +64,16 @@ class UserLoginView(generics.GenericAPIView):
     
 class UserLogoutView(generics.GenericAPIView):
     permission_classes = [permissions.IsAuthenticated]
+    serializer_class = UserLogoutSerializer
 
     def post(self, request, *args, **kwargs):
         try:
             token= request.auth
             token.delete()
             
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response({'detail': 'Successfully logged out.'}, status=status.HTTP_204_NO_CONTENT)
         
         except (AttributeError, Token.DoesNotExist):
-            
-            return Response({'detail': 'Token not found'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'detail': 'Token not found or already logged out.'}, status=status.HTTP_400_BAD_REQUEST)
 
 # Create your views here.

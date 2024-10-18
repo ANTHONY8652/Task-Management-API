@@ -6,7 +6,9 @@ from .views import (
     UserTaskListView,
     TaskSearchView,
     TaskPriorityUpdateView,
-    OverdueTasksView,
+    OverdueTasksView, TaskCompleteView, 
+    CompletedTaskListView, SharedTaskListView, 
+    ShareTaskView,
 )
 
 urlpatterns = [
@@ -17,4 +19,8 @@ urlpatterns = [
     path('search-tasks/', TaskSearchView.as_view(), name='task-search'),
     path('tasks/<int:pk>/update-priority/', TaskPriorityUpdateView.as_view(), name='task-priority-update'),
     path('overdue-tasks/', OverdueTasksView.as_view(), name='overdue-tasks'),
+    path('tasks/<int:pk>/complete/', TaskCompleteView.as_view(), name='task-complete'),
+    path('task/completed/', CompletedTaskListView.as_view(), name='completed-task-list'),
+    path('tasks/<int:pk>/share/', ShareTaskView.as_view(), name='share-task'),
+    path('tasks/shared/', SharedTaskListView.as_view(), name='shared-task-list'),
 ]

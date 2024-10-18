@@ -33,3 +33,6 @@ class UserLoginSerializer(serializers.Serializer):
         
         data['user'] = user
         return data
+    
+class UserLogoutSerializer(serializers.Serializer):
+    pass
